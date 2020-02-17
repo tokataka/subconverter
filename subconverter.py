@@ -109,9 +109,9 @@ class Dialogue:
         text = text.replace('\n', '\\N')
         return text
 
+
 class SubConverter:
     title = ''
-    filename = ''
     ext = ''
     dialogues = []
     font_face = '맑은 고딕'
@@ -129,8 +129,7 @@ class SubConverter:
     def load_file(self, file):
         self.ext = file.split('.')[-1]
         self.ext = 'ass' if self.ext == 'ssa' else self.ext
-        self.title = ""
-        self.filename = file[:-(len(self.ext) + 1)]
+        self.title = file[:-(len(self.ext) + 1)]
         self.dialogues = []
 
         with open(file, 'rb') as fp:
@@ -150,6 +149,8 @@ class SubConverter:
 
     def load_string(self, ext, content):
         self.ext = 'ass' if ext == 'ssa' else ext
+        self.title = ''
+        self.dialogues = []
 
         content = content.replace('\r\n', '\n')
 
@@ -169,7 +170,8 @@ class SubConverter:
             return self.to_ass()
 
     def from_smi(self, content):
-        self.title = re.search(r'<title>(.+)</title>', content, flags=re.I)[1]
+        title = re.search(r'<title>(.+)</title>', content, flags=re.I)[1]
+        self.title = title if title else self.title
         content = re.split(r'<body>', content, flags=re.I)[1]
         content = re.split(r'</body>', content, flags=re.I)[0]
         texts = re.split(r'<sync\s+start=', content, flags=re.I)[1:]
@@ -192,7 +194,6 @@ class SubConverter:
             self.dialogues.append(Dialogue('smi', start, end, text))
 
     def from_srt(self, content):
-        self.title = self.filename
         content = re.sub(r'\n{3,}', '\n\n', content)
         for block in content.split('\n\n'):
             lines = block.split('\n')
@@ -278,6 +279,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             lines.append(f'Dialogue: 0, {dialogue.start("ass")},{dialogue.end("ass")},Default,,0,0,0,,{text}')
 
         return header + '\n'.join(lines)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
