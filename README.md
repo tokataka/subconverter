@@ -30,11 +30,12 @@ converted = sc.convert('ass')
 
 
 ## Optional arguments list
-| Parameter       | Default   | Description
-|-----------------|-----------|-------------
-| -f --format     | 'ass'     | Target format ['smi' \| 'srt' \| 'ass']
-| -d --delete     |           | Enable to delete original files
-| -ff --font-face | '맑은 고딕' | Font face for .smi and .ass
-| -fs --font-size | 70        | Font size for .ass
-| -W --width      | 1920      | Video width for .ass
-| -H --height     | 1080      | Video height for .ass
+| Parameter         | Default     | Description
+|-------------------|-------------|-------------
+| [file1 file2 ...] |             | Input files, Empty for all subtitle files in current directory
+| -f --format       | 'ass'       | Target format ['smi' \| 'srt' \| 'ass']
+| -d --delete       |             | Enable to delete original files
+| -ff --font-face   | '맑은 고딕' | Font face for .smi and .ass
+| -fs --font-size   | 70          | Font size for .ass
+| -W --width        | 1920        | Video width for .ass
+| -H --height       | 1080        | Video height for .ass
