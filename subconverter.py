@@ -306,11 +306,12 @@ if __name__ == "__main__":
     sc = SubConverter(args)
 
     for file in files:
-        if file.split('.')[-1] == args.format:
+        ext = file.split('.')[-1]
+        if ext == args.format:
             continue
         sc.load_file(file)
         converted = sc.convert(args.format)
-        new_file = f'{sc.filename}.{args.format}'
+        new_file = f'{file[:-(len(ext) + 1)]}.{args.format}'
         with open(new_file, 'w', encoding='utf-8') as fp:
             fp.write(converted)
         if args.delete:
