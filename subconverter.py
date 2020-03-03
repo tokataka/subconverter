@@ -344,7 +344,7 @@ class SubConverter:
 
             text = re.search(r'.+<p class=\w+[^>]*>(.+)$', cur, flags=re.I)[1]
 
-            text = text.replace('<BR>', '\n')
+            text = re.sub(r'<br>', '\n', text, flags=re.I)
             text = re.sub(r'&nbsp;', '', text, flags=re.I)
             text = text.strip()
 
