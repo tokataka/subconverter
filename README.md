@@ -6,7 +6,6 @@ Currently only maintains color informations
 ## Requirements
 
 - python3
-- colour
 - cchardet
 
 
